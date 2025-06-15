@@ -137,9 +137,9 @@ main {
     justify-content: flex-start;
     gap: 0.5rem;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 0.5rem;
-    overflow-x: auto;
+    border-bottom: none;
+    padding-bottom: 0;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -150,7 +150,7 @@ main {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 500;
-    border-radius: 5px 5px 0 0;
+    border-radius: 0;
     cursor: pointer;
     transition: var(--transition-speed);
     position: relative;
@@ -158,7 +158,8 @@ main {
 }
 
 .tab-btn:hover {
-    background-color: rgba(94, 129, 172, 0.1);
+    background-color: transparent;
+    color: var(--primary-color);
 }
 
 .tab-btn.active {
@@ -167,14 +168,7 @@ main {
 }
 
 .tab-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: var(--primary-color);
-    border-radius: 3px;
+    display: none;
 }
 
 .tab-content {
@@ -853,4 +847,14 @@ footer {
         transform: translateY(-50%) !important;
         z-index: 1100 !important;
     }
+}
+
+/* 移除滚动条样式 */
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
 } 

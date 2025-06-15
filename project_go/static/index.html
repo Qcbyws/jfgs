@@ -5,6 +5,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>设备问题管理系统</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 20px;
+            background: #f8f9fa;
+            border-bottom: none;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            overflow: hidden;
+        }
+        .system-title {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .system-title img {
+            height: 35px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .current-time {
+            font-size: 14px;
+            color: #666;
+            white-space: nowrap;
+            line-height: 35px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .search-section {
+            padding: 8px 15px;
+            background: #fff;
+            border-radius: 4px;
+            margin: 8px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 100%;
+        }
+        .search-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #333;
+        }
+        .search-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: flex-end;
+            margin-bottom: 0;
+            width: 100%;
+        }
+        .search-input-group {
+            margin: 0;
+            flex: 1;
+            min-width: 150px;
+            max-width: none;
+        }
+        .search-input-group label {
+            font-size: 12px;
+            margin-bottom: 2px;
+            display: block;
+            color: #666;
+        }
+        .search-input-group input {
+            height: 26px;
+            font-size: 12px;
+            padding: 2px 6px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .search-input-group input:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+        .search-buttons {
+            display: flex;
+            gap: 8px;
+            margin-left: 8px;
+            align-items: flex-end;
+        }
+        .search-buttons .btn {
+            padding: 2px 10px;
+            font-size: 12px;
+            height: 26px;
+            white-space: nowrap;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .search-buttons .btn:hover {
+            background-color: #e9ecef;
+        }
+        .date-group {
+            min-width: 180px;
+            flex: 1.2;
+        }
+        .date-picker-container {
+            position: relative;
+        }
+        .date-picker-icon {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #666;
+            pointer-events: none;
+        }
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 5px 10px;
+            }
+            .header-right {
+                height: 25px;
+            }
+            .system-title img {
+                height: 25px;
+            }
+            .current-time {
+                font-size: 12px;
+                line-height: 25px;
+            }
+            .search-section {
+                margin: 8px 0;
+                padding: 8px 10px;
+            }
+            .search-input-group {
+                min-width: 120px;
+            }
+            .date-group {
+                min-width: 150px;
+            }
+            .search-buttons {
+                margin-left: 0;
+                margin-top: 8px;
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            height: 35px;
+        }
+        .tabs {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            overflow: hidden;
+            border-bottom: none;
+        }
+        .tab-btn {
+            padding: 8px 0;
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex: 1;
+            text-align: center;
+            position: relative;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+        .tab-btn::after {
+            display: none;
+        }
+        .tab-btn,
+        .tab-btn:hover,
+        .tab-btn:focus,
+        .tab-btn:active,
+        .tab-btn.active {
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+        .tab-btn:hover {
+            color: #333;
+            background-color: rgba(0, 123, 255, 0.05);
+        }
+        .tab-btn.active {
+            color: #fff;
+            background-color: #007bff;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+        }
+        @media (max-width: 768px) {
+            .tabs {
+                padding: 0 10px;
+            }
+            .tab-btn {
+                padding: 6px 0;
+                font-size: 14px;
+                margin: 0 1px;
+            }
+        }
+    </style>
     <!-- 引入现代字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- 引入Material Icons -->
@@ -16,21 +230,25 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <h1 class="system-title">设备问题管理系统</h1>
-                <div class="current-time" id="current-time"></div>
+                <div class="header-left">
+                    <div class="tabs" id="tabs">
+                        <button class="tab-btn active" data-tab="pending">待操作</button>
+                        <button class="tab-btn" data-tab="business">业务已操作</button>
+                        <button class="tab-btn" data-tab="engineer">工程师已操作</button>
+                        <button class="tab-btn" data-tab="all">全部</button>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <h1 class="system-title">
+                        <img src="/static/images/logo.png" alt="设备问题管理系统" title="设备问题管理系统">
+                    </h1>
+                    <div class="current-time" id="current-time"></div>
+                </div>
             </div>
         </header>
 
         <main>
-            <div class="tabs" id="tabs">
-                <button class="tab-btn active" data-tab="pending">待操作</button>
-                <button class="tab-btn" data-tab="business">业务已操作</button>
-                <button class="tab-btn" data-tab="engineer">工程师已操作</button>
-                <button class="tab-btn" data-tab="all">全部</button>
-            </div>
-
             <div class="search-section">
-                <h3>搜索筛选</h3>
                 <div class="search-inputs">
                     <div class="search-input-group">
                         <label for="eqpno">设备编号:</label>
@@ -58,10 +276,10 @@
                             <span class="date-picker-icon material-icons">event</span>
                         </div>
                     </div>
-                </div>
-                <div class="search-buttons">
-                    <button id="search-btn" class="btn">搜索</button>
-                    <button id="reset-btn" class="btn">重置</button>
+                    <div class="search-buttons">
+                        <button id="search-btn" class="btn">搜索</button>
+                        <button id="reset-btn" class="btn">重置</button>
+                    </div>
                 </div>
             </div>
 
@@ -183,7 +401,7 @@
         </main>
 
         <footer>
-            <p>&copy; 2023 设备问题管理系统</p>
+            <p>&copy; 2025 <img src="/static/images/logo.png" alt="先驱自动化系统" style="height: 20px; vertical-align: middle;"> 先驱自动化系统</p>
             <div class="status-indicator">
                 <span id="db-status" class="status-dot disconnected"></span>
                 <span id="db-status-text">数据库状态: 检测中...</span>
